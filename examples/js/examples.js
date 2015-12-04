@@ -46,7 +46,6 @@ function loadEpisodes(url,id){
           + '</p><p class="audio-container"><audio controls><source src="'
           + entry.enclosures[0].url
           + '"></audio></p>'
-      console.log(entry)
       podDiv.appendChild(div)
     }
   })
