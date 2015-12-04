@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Feednami : A lightweight Javascript client for downloading RSS/Atom feeds">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Feednami</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/richardkazuomiller/feednami-client">View on GitHub</a>
+
+          <h1 id="project_title">Feednami</h1>
+          <h2 id="project_tagline">A lightweight Javascript client for downloading RSS/Atom feeds</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/richardkazuomiller/feednami-client/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/richardkazuomiller/feednami-client/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="feednami" class="anchor" href="#feednami" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feednami</h1>
+
+<p>Google Feed API is dead! It was deprecated a long time ago, but people were still using it and when it finally went offline a lot of people had problems, so I made this!</p>
+
+<h2>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use</h2>
+
+<h3>
+<a id="import" class="anchor" href="#import" aria-hidden="true"><span class="octicon octicon-link"></span></a>Import</h3>
+
+<pre><code>&lt;script src="https://raw.githubusercontent.com/richardkazuomiller/feednami-client/master/src/feednami-client.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<h3>
+<a id="load-a-feed" class="anchor" href="#load-a-feed" aria-hidden="true"><span class="octicon octicon-link"></span></a>Load a feed</h3>
+
+<p>Fetch your favorite blog or podcast!</p>
+
+<pre><code>&lt;script&gt;
+  var url = 'http://daringfireball.net/feeds/articles'
+  feednami.load(url,function(result){
+    if(result.error){
+      console.log(result.error)
+    }
+    else{
+      var entries = result.feed.entries
+      for(var i = 0; i &lt; entries.length; i++){
+        var entry = entries[i]
+        console.log(entry.title)
+      }
+    }
+  })
+&lt;/script&gt;
+</code></pre>
+
+<h3>
+<a id="for-the-former-google-api-users" class="anchor" href="#for-the-former-google-api-users" aria-hidden="true"><span class="octicon octicon-link"></span></a>For the former Google API users</h3>
+
+<p><code>feednami.loadGoogleFormat</code> replicates as best as possible the Google Feed API. For example, the <code>content</code> attribute of an entry corresponsds to <code>&lt;content&gt;</code>, <code>&lt;summary&gt;</code>, or <code>&lt;description&gt;</code>, whereas by default, all three are returned with the unset values as <code>null</code>.</p>
+
+<pre><code>&lt;script&gt;
+  var url = 'http://daringfireball.net/feeds/articles'
+  feednami.loadGoogleFormat(url,function(result){
+    if(result.error){
+      console.log(result.error)
+    }
+    else{
+      var entries = result.feed.entries
+      for(var i = 0; i &lt; entries.length; i++){
+        var entry = entries[i]
+        console.log(entry.title)
+        console.log(entry.contentSnippet) 
+        // the first 120 characters of the entry
+      }
+    }
+  })
+&lt;/script&gt;
+</code></pre>
+
+<p>Where with the Google Feed API you would use <code>new Feed(url).load(callback)</code>, all you need to do is use <code>feednami.loadGoogleFormat(url,callback)</code></p>
+
+<h3>
+<a id="function-reference" class="anchor" href="#function-reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Function Reference</h3>
+
+<h4>
+<a id="feednamiloadoptionscallback" class="anchor" href="#feednamiloadoptionscallback" aria-hidden="true"><span class="octicon octicon-link"></span></a>feednami.load(options,callback)</h4>
+
+<p>The first argument can be either a <code>url</code> or an <code>options</code> object. The only required option is <code>url</code>. All others are optional.</p>
+
+<ul>
+<li>
+<code>url</code> - a valid url of the RSS or Atom feed to load</li>
+<li>
+<code>includeXml</code> - default <code>false</code>. Set to true if you want to load the original XML Document </li>
+</ul>
+
+<h5>
+<a id="result-object" class="anchor" href="#result-object" aria-hidden="true"><span class="octicon octicon-link"></span></a>Result Object</h5>
+
+<p>This is basically copied from <a href="https://developers.google.com/feed/v1/reference">https://developers.google.com/feed/v1/reference</a></p>
+
+<ul>
+<li>
+<code>error?</code> Present if there was an error loading the feed.
+
+<ul>
+<li>
+<code>code</code> An HTTP-style error code.</li>
+<li>
+<code>message</code> A human-readable string describing the error.</li>
+</ul>
+</li>
+<li>
+<code>xmlDocument?</code> Present if XML Document is requested</li>
+<li>
+<code>feed</code> 
+
+<ul>
+<li>
+<code>meta</code> Feed properties. The parser normalizes feed data into generic properties similar to the RSS 2.0 format. The original tags e.g. <code>rdf:title</code> are also present.
+
+<ul>
+<li><code>title</code></li>
+<li><code>description</code></li>
+<li>
+<code>link</code> (website link)</li>
+<li>
+<code>xmlurl</code> (the canonical link to the feed, as specified by the feed)</li>
+<li>
+<code>date</code> (most recent update)</li>
+<li>
+<code>pubdate</code> (publish date)</li>
+<li>`author</li>
+<li><code>language</code></li>
+<li>
+<code>image[]</code>
+
+<ul>
+<li><code>url</code></li>
+<li><code>title</code></li>
+</ul>
+</li>
+<li><code>favicon</code></li>
+<li><code>copyright</code></li>
+<li><code>generator</code></li>
+<li>
+<code>categories[]</code> </li>
+</ul>
+</li>
+<li>
+<code>entries[]</code>
+
+<ul>
+<li><code>title</code></li>
+<li>`description (frequently, the full article content)</li>
+<li>
+<code>summary</code> (frequently, an excerpt of the article content)</li>
+<li><code>link</code></li>
+<li>
+<code>origlink</code> (when FeedBurner or Pheedo puts a special tracking url in the link property, origlink contains the original link)</li>
+<li>
+<code>permalink</code> (when an RSS feed has a guid field and the isPermalink attribute is not set to false, permalink contains the value of guid)</li>
+<li>
+<code>date</code> (most recent update)</li>
+<li>
+<code>pubdate</code> (original published date)</li>
+<li><code>author</code></li>
+<li>
+<code>guid</code> (a unique identifier for the article)</li>
+<li>
+<code>comments</code> (a link to the article's comments section)</li>
+<li>
+<code>image</code> (an Object containing url and title properties)</li>
+<li>
+<code>categories</code> (an Array of Strings)</li>
+<li>
+<code>source</code> (an Object containing url and title properties pointing to the original source for an article; see the RSS Spec for an explanation of this element)</li>
+<li>
+<code>enclosures</code> (an Array of Objects, each representing a podcast or other enclosure and having a url property and possibly type and length properties)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<h4>
+<a id="feednamiloadgoogleformaturlcallback" class="anchor" href="#feednamiloadgoogleformaturlcallback" aria-hidden="true"><span class="octicon octicon-link"></span></a>feednami.loadGoogleFormat(url,callback)</h4>
+
+<h5>
+<a id="result-object-1" class="anchor" href="#result-object-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Result Object</h5>
+
+<p>This is basically copied from <a href="https://developers.google.com/feed/v1/reference">https://developers.google.com/feed/v1/reference</a></p>
+
+<ul>
+<li>
+<code>error?</code> Present if there was an error loading the feed.
+
+<ul>
+<li>
+<code>code</code> An HTTP-style error code.</li>
+<li>
+<code>message</code> A human-readable string describing the error.</li>
+</ul>
+</li>
+<li>
+<code>xmlDocument?</code> Present if XML Document is requested</li>
+<li>
+<code>feed</code>
+
+<ul>
+<li>
+<code>feedUrl</code> The URL for the feed</li>
+<li>
+<code>title</code> The feed title. Corresponds to the <code>&lt;title&gt;</code> element in Atom and the <code>&lt;title&gt;</code> element in RSS.</li>
+<li>
+<code>link</code> The URL for the HTML version of the feed. Corresponds to the <code>&lt;link&gt;</code> element in Atom and the <code>&lt;link&gt;</code> element in RSS.</li>
+<li>
+<code>description</code> The feed description. Corresponds to the <code>&lt;subtitle&gt;</code> element in Atom and the <code>&lt;description&gt;</code> element in RSS.</li>
+<li>
+<code>author</code> The feed author. Corresponds to the <code>&lt;name&gt;</code> element for the author in Atom.</li>
+<li>
+<code>entries[]</code> A list of all of the entries in the feed. Corresponds to the <code>&lt;entry&gt;</code> element in Atom and the <code>&lt;item&gt;</code> element in RSS.
+
+<ul>
+<li>
+<code>mediaGroup</code> A container for Media RSS feed results. All result properties nested under mediaGroups correspond exactly as documented in the Media RSS Specification. Media RSS is available only for feed entries newer than February 1st, 2010. Please refer to that specification for detailed information about Media RSS fields.</li>
+<li>
+<code>title</code> The entry title. Corresponds to the <code>&lt;title&gt;</code> element in Atom and the <code>&lt;title&gt;</code> element in RSS.</li>
+<li>
+<code>link</code> The URL for the HTML version of the entry. Corresponds to the <code>&lt;link&gt;</code> element in Atom and the <code>&lt;link&gt;</code> element in RSS.</li>
+<li>
+<code>content</code> The body of this entry, inlcuding HTML tags. Since this value can contain HTML tags, you should display this value using <code>elem.innerHTML = entry.content</code> (as opposed to using document.createTextNode). Corresponds to the <code>&lt;content&gt;</code> or <code>&lt;summary&gt;</code> elements in Atom and the <code>&lt;description&gt;</code> element in RSS.</li>
+<li>
+<code>contentSnippet</code> A snippet (&lt; 120 characters) version of the content attribute. The snippet does not contain any HTML tags.</li>
+<li>
+<code>publishedDate</code> The string date on which the entry was published of the form <code>"13 Apr 2007 12:40:07 -0700"</code>. You can parse the date with new <code>Date(entry.publishedDate)</code>. Corresponds to the <code>&lt;published&gt;</code> element in Atom and the <code>&lt;pubDate&gt;</code> element in RSS.</li>
+<li>
+<code>categories[]</code> A list of string tags for the entry. Corresponds to the term attribute for the  element in Atom and the <code>&lt;category&gt;</code> element in RSS.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<h2>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<p>Thanks to the contributors of <a href="https://github.com/danmactough/node-feedparser">Feedparser</a> for helping power the backend!</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Feednami maintained by <a href="https://github.com/richardkazuomiller">richardkazuomiller</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
