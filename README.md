@@ -4,6 +4,8 @@ Google Feed API is dead! It was deprecated a long time ago, but people were stil
 
 ## How to use 
 
+Example source can be found [here](https://github.com/richardkazuomiller/feednami-client/tree/master/examples) or seen on [feednami.com](https://feednami.com/static/feednami-client/examples/index.html)
+
 ### Import 
 
     <script src="https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js"></script>
