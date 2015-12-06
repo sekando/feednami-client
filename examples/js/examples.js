@@ -1,5 +1,8 @@
 function formatDate(date){
-  var year = 1900 + date.getYear()
+  var year = date.getYear()
+  if(year < 1900){
+    year += 1900
+  }
   var month = date.getMonth()+1
   var day = date.getDate()
   var hour = date.getHours()
@@ -10,7 +13,7 @@ function formatDate(date){
 function loadEntries(url,id){
   var blogDiv = document.getElementById(id)
   feednami.load(url,function(res){
-    blogDiv.getElementsByClassName('loading')[0].remove()
+    blogDiv.removeChild(blogDiv.querySelector('.loading'))
     var entries = res.feed.entries
     var added = 0;
     for(var i = 0; i < entries.length && added < 5; i++){
@@ -20,7 +23,7 @@ function loadEntries(url,id){
         var div = document.createElement('div')
         div.setAttribute('class','entry')
         div.innerHTML = '<p class="title"><a href="'+entry.link+'" target="_blank">'+entry.title+'</a></p><p class="date">'+
-        formatDate(new Date(entry.pubdate))+'</p>'
+        formatDate(new Date(entry.pubdate_ms))+'</p>'
         blogDiv.appendChild(div)
       }
     }
@@ -30,7 +33,7 @@ function loadEntries(url,id){
 function loadEpisodes(url,id){
   var podDiv = document.getElementById(id)
   feednami.load(url,function(res){
-    podDiv.getElementsByClassName('loading')[0].remove()
+    podDiv.removeChild(podDiv.querySelector('.loading'))
     var entries = res.feed.entries
     for(var i = 0; i < entries.length && i < 5; i++){
       var entry = entries[i]
@@ -42,7 +45,7 @@ function loadEpisodes(url,id){
           + '" target="_blank">'
           + entry.title
           + '</a></p><p class="date">'
-          + formatDate(new Date(entry.pubdate))
+          + formatDate(new Date(entry.pubdate_ms))
           + '</p><p class="audio-container"><audio controls><source src="'
           + entry.enclosures[0].url
           + '"></audio></p>'

@@ -6,7 +6,7 @@ Google Feed API is dead! It was deprecated a long time ago, but people were stil
 
 ### Import 
 
-    <script src="https://raw.githubusercontent.com/richardkazuomiller/feednami-client/master/src/feednami-client.js"></script>
+    <script src="https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.0.js"></script>
     
 ### Load a feed
 
