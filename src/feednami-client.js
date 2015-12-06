@@ -1,7 +1,7 @@
 //v1.0.1
 window.feednami = {}
 feednami.load = function(options,callback){
-  var apiRoot = 'http://localhost:8200/api/v1'
+  var apiRoot = 'https://api.feednami.com/api/v1'
   var feedUrl = options
   if(typeof options == 'object'){
     feedUrl = options.url
