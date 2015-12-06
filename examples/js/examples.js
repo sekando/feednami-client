@@ -35,7 +35,7 @@ function loadEpisodes(url,id){
   feednami.load(url,function(res){
     podDiv.removeChild(podDiv.querySelector('.loading'))
     var entries = res.feed.entries
-    for(var i = 0; i < entries.length && i < 5; i++){
+    for(var i = 0; i < entries.length && i < 3; i++){
       var entry = entries[i]
       var div = document.createElement('div')
       div.setAttribute('class','entry')
@@ -46,7 +46,7 @@ function loadEpisodes(url,id){
           + entry.title
           + '</a></p><p class="date">'
           + formatDate(new Date(entry.pubdate_ms))
-          + '</p><p class="audio-container"><audio controls><source src="'
+          + '</p><p class="audio-container"><audio preload="none" controls><source src="'
           + entry.enclosures[0].url
           + '"></audio></p>'
       podDiv.appendChild(div)
