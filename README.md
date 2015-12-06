@@ -6,7 +6,7 @@ Google Feed API is dead! It was deprecated a long time ago, but people were stil
 
 ### Import 
 
-    <script src="https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.0.js"></script>
+    <script src="https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js"></script>
     
 ### Load a feed
 
@@ -94,7 +94,8 @@ This is basically copied from <https://developers.google.com/feed/v1/reference>
       - `origlink` (when FeedBurner or Pheedo puts a special tracking url in the link property, origlink contains the original link)
       - `permalink` (when an RSS feed has a guid field and the isPermalink attribute is not set to false, permalink contains the value of guid)
       - `date` (most recent update)
-      - `pubdate` (original published date)
+      - `date_ms` (most recent update unix time in ms)
+      - `pubdate` (original published date unix time in ms)
       - `author`
       - `guid` (a unique identifier for the article)
       - `comments` (a link to the article's comments section)
