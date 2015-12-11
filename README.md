@@ -8,7 +8,7 @@ Example source can be found [here](https://github.com/richardkazuomiller/feednam
 
 ### Import 
 
-    <script src="https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js"></script>
+    <script src="https://cdn.rawgit.com/richardkazuomiller/feednami-client/master/releases/1.0.1.min.js"></script>
     
 ### Load a feed
 
