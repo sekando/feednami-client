@@ -5,7 +5,7 @@ feednami.load = function(options,callback){
   if(typeof options == 'object'){
     feedUrl = options.url
   }
-  var qs = 'url='+feedUrl
+  var qs = 'url='+encodeURIComponent(feedUrl)
   if(options.format){
     qs += '&include_xml_document&format='+options.format
   }
